@@ -2,16 +2,22 @@
 
 企业级 AI 数据分析平台 — 彩票研究所
 
+## Version
+
+当前开发基线：**0.1.0-SNAPSHOT**（v1.0 开发中，尚未发布）
+
 ## Tech Stack
 
 | Layer | Technology |
 |-------|------------|
 | Backend | Java 17, Spring Boot 3, MyBatis Plus, Spring Security, JWT |
-| Frontend | Vue 3, Vite, TypeScript, Element Plus, Pinia |
-| AI Service | Python 3.11+, FastAPI |
+| Frontend | Vue 3, Vite, TypeScript, Element Plus, Pinia, ECharts |
+| AI Service | Python 3.11+, FastAPI, XGBoost, LightGBM, LangChain |
 | Database | MySQL 8 |
 | Cache | Redis 7 |
-| Deployment | Docker Compose |
+| Message Queue | Apache Kafka 3.9 + Confluent Schema Registry (Avro 可选) |
+| Observability | Spring Actuator, Prometheus, Correlation ID |
+| Deployment | Docker Compose · Kubernetes (Kustomize 多区域) |
 
 ## Quick Start
 
@@ -216,11 +222,14 @@ SLA_MAX_P95_MS=800
 lottery-ai/
 ├── backend/          # Spring Boot API (8080)
 ├── frontend/         # Vue SPA (5173)
-├── ai-service/       # FastAPI (8000)
-├── database/init/    # SQL 初始化
+├── ai-service/       # FastAPI ML 服务 (8000)
+├── database/init/    # SQL 初始化 (001–010)
 ├── docker/           # Dockerfiles
-├── docs/             # 架构文档
-└── scripts/          # 启动脚本
+├── k8s/              # Kubernetes manifests + region overlays
+├── schemas/          # Avro 事件 schema
+├── docs/             # 架构与部署文档
+├── scripts/          # 启动与 Mock 工具
+└── .github/workflows/# CI 流水线
 ```
 
 详见 [docs/architecture.md](docs/architecture.md)

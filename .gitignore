@@ -12,9 +12,13 @@ Thumbs.db
 # Environment
 .env
 .env.local
+application-local.yml
+
+# TypeScript build info
+*.tsbuildinfo
 
 # Java / Maven
-backend/target/
+**/target/
 backend/.mvn/wrapper/maven-wrapper.jar
 *.class
 *.jar
@@ -22,16 +26,17 @@ backend/.mvn/wrapper/maven-wrapper.jar
 *.log
 
 # Node
-frontend/node_modules/
+node_modules/
 frontend/dist/
 frontend/.vite/
 *.local
 
 # Python
-ai-service/__pycache__/
+__pycache__/
+*.py[cod]
+*$py.class
 ai-service/.venv/
 ai-service/venv/
-ai-service/*.pyc
 ai-service/.pytest_cache/
 
 # Docker

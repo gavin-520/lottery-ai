@@ -1,3 +1,6 @@
+# Copy to application-local.yml and adjust for your machine.
+# application-local.yml is gitignored — do not commit personal IPs or secrets.
+
 spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/lottery_ai?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai}
@@ -6,8 +9,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     redis:
-      host: 192.168.0.10
-      port: 6379
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
       timeout: 2000ms
       lettuce:
         pool:
