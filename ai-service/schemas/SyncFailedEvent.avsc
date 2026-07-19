@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "SyncFailedEvent",
+  "namespace": "com.lottery.events",
+  "fields": [
+    {"name": "type", "type": "string"},
+    {"name": "source", "type": "string"},
+    {"name": "status", "type": "string"},
+    {"name": "message", "type": "string"},
+    {"name": "errorType", "type": "string"},
+    {"name": "httpStatus", "type": "int"},
+    {"name": "region", "type": "string"},
+    {"name": "correlationId", "type": "string"},
+    {"name": "schemaVersion", "type": "string"},
+    {"name": "timestamp", "type": "long"}
+  ]
+}

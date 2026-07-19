@@ -26,14 +26,20 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) {
         Long count = sysUserMapper.selectCount(new LambdaQueryWrapper<>());
         if (count == 0) {
-            SysUser admin = new SysUser();
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("admin123"));
-            admin.setNickname("管理员");
-            admin.setRole("ADMIN");
-            admin.setStatus(1);
-            sysUserMapper.insert(admin);
-            log.info("Default admin user created (username: admin, password: admin123)");
+            createUser("admin", "admin123", "管理员", "ADMIN");
+            createUser("analyst", "analyst123", "分析师", "ANALYST");
+            createUser("user", "user123", "普通用户", "USER");
+            log.info("Default users created: admin/admin123, analyst/analyst123, user/user123");
         }
+    }
+
+    private void createUser(String username, String password, String nickname, String role) {
+        SysUser user = new SysUser();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setNickname(nickname);
+        user.setRole(role);
+        user.setStatus(1);
+        sysUserMapper.insert(user);
     }
 }

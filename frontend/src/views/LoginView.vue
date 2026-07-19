@@ -23,7 +23,7 @@
         </el-button>
       </el-form>
 
-      <p class="hint">默认账号：admin / admin123</p>
+      <p class="hint">admin/admin123 · analyst/analyst123 · user/user123</p>
     </el-card>
   </div>
 </template>
@@ -60,7 +60,8 @@ async function handleLogin() {
     auth.setAuth({
       token: data.token,
       username: data.username,
-      nickname: data.nickname
+      nickname: data.nickname,
+      role: data.role
     })
     ElMessage.success('登录成功')
     router.push({ name: 'dashboard' })

@@ -1,9 +1,19 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import predict
+from app.services.kafka_consumer import kafka_status, start_kafka_consumer
 
-app = FastAPI(title="Lottery AI Service", version="0.1.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    start_kafka_consumer()
+    yield
+
+
+app = FastAPI(title="Lottery AI Service", version="0.2.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,4 +27,9 @@ app.include_router(predict.router)
 
 @app.get("/health")
 def health():
-    return {"status": "OK", "service": "lottery-ai-service"}
+    ks = kafka_status()
+    return {
+        "status": "OK",
+        "service": "lottery-ai-service",
+        "kafka": ks,
+    }

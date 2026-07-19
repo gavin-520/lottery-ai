@@ -1,15 +1,28 @@
 package com.lottery.common;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public Result<Void> handleAccessDenied(AccessDeniedException ex) {
+        return Result.fail(403, "Access denied");
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public Result<Void> handleStatus(ResponseStatusException ex) {
+        return Result.fail(ex.getStatusCode().value(), ex.getReason() != null ? ex.getReason() : "error");
+    }
 
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)

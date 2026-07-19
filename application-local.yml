@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/lottery_ai?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai}
+    username: ${SPRING_DATASOURCE_USERNAME:lottery}
+    password: ${SPRING_DATASOURCE_PASSWORD:lottery_pass}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: 192.168.0.10
+      port: 6379
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+
+server:
+  port: 8080
+
+jwt:
+  secret: ${JWT_SECRET:change-me-to-a-long-random-secret-key-at-least-256-bits}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
+lottery:
+  ai-service-url: ${AI_SERVICE_URL:http://localhost:8000}

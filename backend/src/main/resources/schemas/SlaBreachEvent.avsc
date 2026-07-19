@@ -1,0 +1,18 @@
+{
+  "type": "record",
+  "name": "SlaBreachEvent",
+  "namespace": "com.lottery.events",
+  "fields": [
+    {"name": "type", "type": "string"},
+    {"name": "breachId", "type": "long"},
+    {"name": "metric", "type": "string"},
+    {"name": "thresholdValue", "type": "double"},
+    {"name": "actualValue", "type": "double"},
+    {"name": "severity", "type": "string"},
+    {"name": "region", "type": "string"},
+    {"name": "correlationId", "type": "string"},
+    {"name": "message", "type": "string"},
+    {"name": "schemaVersion", "type": "string"},
+    {"name": "timestamp", "type": "long"}
+  ]
+}

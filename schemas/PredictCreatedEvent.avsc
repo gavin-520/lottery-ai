@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "PredictCreatedEvent",
+  "namespace": "com.lottery.events",
+  "fields": [
+    {"name": "type", "type": "string"},
+    {"name": "period", "type": "string"},
+    {"name": "modelName", "type": "string"},
+    {"name": "confidence", "type": "double"},
+    {"name": "region", "type": "string"},
+    {"name": "correlationId", "type": "string"},
+    {"name": "schemaVersion", "type": "string"},
+    {"name": "timestamp", "type": "long"}
+  ]
+}

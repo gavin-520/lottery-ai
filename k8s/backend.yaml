@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: lottery-ai
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: lottery-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql:3306/lottery_ai?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: lottery-config
+                  key: MYSQL_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: lottery-secrets
+                  key: MYSQL_PASSWORD
+            - name: SPRING_DATA_REDIS_HOST
+              value: redis
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: lottery-secrets
+                  key: JWT_SECRET
+            - name: AI_SERVICE_URL
+              value: http://ai-service:8000
+            - name: SYNC_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: lottery-config
+                  key: SYNC_ENABLED
+            - name: SYNC_CRON
+              valueFrom:
+                configMapKeyRef:
+                  name: lottery-config
+                  key: SYNC_CRON
+            - name: SYNC_FEED_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: lottery-config
+                  key: SYNC_FEED_TYPE
+            - name: KAFKA_ENABLED
+              value: "true"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka:9092
+            - name: LOTTERY_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: lottery-config
+                  key: LOTTERY_REGION
+            - name: KAFKA_USE_AVRO
+              valueFrom:
+                configMapKeyRef:
+                  name: lottery-config
+                  key: KAFKA_USE_AVRO
+            - name: KAFKA_SCHEMA_REGISTRY_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: lottery-config
+                  key: KAFKA_SCHEMA_REGISTRY_URL
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: lottery-ai
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 8080

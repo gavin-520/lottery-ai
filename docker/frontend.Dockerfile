@@ -1,4 +1,4 @@
-FROM node:20-alpine AS build
+FROM node:20-slim AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
@@ -9,7 +9,7 @@ ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 ENV VITE_AI_BASE_URL=$VITE_AI_BASE_URL
 RUN npm run build
 
-FROM nginx:alpine
+FROM nginx:stable
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80

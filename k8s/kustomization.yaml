@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: lottery-ai
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - mysql.yaml
+  - redis.yaml
+  - kafka.yaml
+  - schema-registry.yaml
+  - backend.yaml
+  - ai-service.yaml
+  - frontend.yaml
+  - pdb.yaml
+  - hpa.yaml
+  - ingress.yaml

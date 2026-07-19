@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: lottery-ai
+resources:
+  - ../
+nameSuffix: -eu
+commonLabels:
+  lottery.ai/region: eu-west-1
+patches:
+  - target:
+      kind: ConfigMap
+      name: lottery-config
+    patch: |-
+      - op: add
+        path: /data/LOTTERY_REGION
+        value: eu-west-1
+      - op: add
+        path: /data/KAFKA_USE_AVRO
+        value: "true"
+      - op: add
+        path: /data/KAFKA_SCHEMA_REGISTRY_URL
+        value: http://schema-registry:8081
