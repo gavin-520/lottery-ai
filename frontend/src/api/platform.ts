@@ -6,6 +6,8 @@ export interface PlatformInfo {
   avroEnabled: boolean
   schemaVersion: string
   schemaRegistryUrl: string
+  lotteryType?: string
+  lotteryTypeLabel?: string
 }
 
 export async function getPlatformInfo(): Promise<PlatformInfo> {

@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import predict
+from app.routers import fc3d, predict
 from app.services.kafka_consumer import kafka_status, start_kafka_consumer
 
 
@@ -23,6 +23,7 @@ app.add_middleware(
 )
 
 app.include_router(predict.router)
+app.include_router(fc3d.router)
 
 
 @app.get("/health")

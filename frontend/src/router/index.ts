@@ -32,6 +32,12 @@ const router = createRouter({
           meta: { roles: ['ADMIN', 'ANALYST', 'USER'] }
         },
         {
+          path: 'fc3d/analytics',
+          name: 'fc3d-analytics',
+          component: () => import('@/views/Fc3dAnalyticsView.vue'),
+          meta: { roles: ['ADMIN', 'ANALYST', 'USER'] }
+        },
+        {
           path: 'predict',
           name: 'predict',
           component: () => import('@/views/PredictView.vue'),
@@ -41,6 +47,30 @@ const router = createRouter({
           path: 'backtest',
           name: 'backtest',
           component: () => import('@/views/BacktestView.vue'),
+          meta: { roles: ['ADMIN', 'ANALYST'] }
+        },
+        {
+          path: 'fc3d/backtest',
+          name: 'fc3d-backtest',
+          component: () => import('@/views/Fc3dBacktestView.vue'),
+          meta: { roles: ['ADMIN', 'ANALYST'] }
+        },
+        {
+          path: 'fc3d/backtest/details',
+          name: 'fc3d-backtest-details',
+          component: () => import('@/views/Fc3dBacktestDetailView.vue'),
+          meta: { roles: ['ADMIN', 'ANALYST'] }
+        },
+        {
+          path: 'fc3d/model-evaluation',
+          name: 'fc3d-model-evaluation',
+          component: () => import('@/views/Fc3dModelEvaluationView.vue'),
+          meta: { roles: ['ADMIN', 'ANALYST'] }
+        },
+        {
+          path: 'fc3d/model-center',
+          name: 'fc3d-model-center',
+          component: () => import('@/views/Fc3dModelCenterView.vue'),
           meta: { roles: ['ADMIN', 'ANALYST'] }
         },
         {

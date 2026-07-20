@@ -1,6 +1,7 @@
 package com.lottery.controller;
 
 import com.lottery.common.Result;
+import com.lottery.domain.LotteryType;
 import com.lottery.dto.PlatformInfoResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,9 @@ public class HealthController {
     @Value("${lottery.kafka.schema-registry-url:}")
     private String schemaRegistryUrl;
 
+    @Value("${lottery.default-type:FC3D}")
+    private String defaultLotteryType;
+
     @GetMapping("/health")
     public Result<Map<String, String>> health() {
         return Result.ok(Map.of(
@@ -39,6 +43,10 @@ public class HealthController {
 
     @GetMapping("/platform/info")
     public Result<PlatformInfoResponse> platformInfo() {
-        return Result.ok(new PlatformInfoResponse(region, kafkaEnabled, avroEnabled, schemaVersion, schemaRegistryUrl));
+        LotteryType type = LotteryType.fromCode(defaultLotteryType);
+        return Result.ok(new PlatformInfoResponse(
+                region, kafkaEnabled, avroEnabled, schemaVersion, schemaRegistryUrl,
+                type.name(), type.getDisplayName()
+        ));
     }
 }

@@ -12,4 +12,8 @@ public class PlatformInfoResponse {
     private boolean avroEnabled;
     private String schemaVersion;
     private String schemaRegistryUrl;
+    /** Active UI lottery type code: SSQ | FC3D */
+    private String lotteryType;
+    /** Display name, e.g. 福彩3D */
+    private String lotteryTypeLabel;
 }

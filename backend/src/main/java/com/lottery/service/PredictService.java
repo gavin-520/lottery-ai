@@ -1,11 +1,12 @@
 package com.lottery.service;
 
+import com.lottery.context.CorrelationIdContext;
+import com.lottery.domain.LotteryType;
 import com.lottery.dto.PredictResponse;
 import com.lottery.entity.LotteryHistory;
 import com.lottery.entity.PredictRecord;
 import com.lottery.mapper.PredictRecordMapper;
 import com.lottery.rule.RuleEngine;
-import com.lottery.context.CorrelationIdContext;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -105,6 +106,7 @@ public class PredictService {
     private void saveRecord(PredictResponse response) {
         PredictRecord record = new PredictRecord();
         record.setPeriod(response.getPeriod());
+        record.setLotteryType(LotteryType.SSQ.name());
         record.setModelName(response.getModelName());
         record.setRedBalls(response.getRedBalls().stream().map(String::valueOf).collect(Collectors.joining(",")));
         record.setBlueBall(String.valueOf(response.getBlueBall()));

@@ -36,6 +36,7 @@ jwt:
 
 lottery:
   region: ${LOTTERY_REGION:local}
+  default-type: ${LOTTERY_DEFAULT_TYPE:FC3D}
   ai-service-url: ${AI_SERVICE_URL:http://localhost:8000}
   sync:
     enabled: ${SYNC_ENABLED:true}
@@ -48,6 +49,43 @@ lottery:
       api-key-header: ${SYNC_EXTERNAL_API_KEY_HEADER:X-API-Key}
       max-retries: ${SYNC_EXTERNAL_MAX_RETRIES:3}
       timeout-ms: ${SYNC_EXTERNAL_TIMEOUT_MS:5000}
+  fc3d:
+    sync:
+      enabled: ${FC3D_SYNC_ENABLED:true}
+      # After draw (~21:15 CST)
+      cron: ${FC3D_SYNC_CRON:0 40 21 * * *}
+      # Morning catch-up if evening failed
+      catchup-cron: ${FC3D_SYNC_CATCHUP_CRON:0 10 8 * * *}
+      zone: ${FC3D_SYNC_ZONE:Asia/Shanghai}
+      feed-url: ${FC3D_SYNC_FEED_URL:http://data.17500.cn/3d_desc.txt}
+      timeout-ms: ${FC3D_SYNC_TIMEOUT_MS:30000}
+      # Daily job scans newest N lines (full history via ?full=true)
+      recent-lines: ${FC3D_SYNC_RECENT_LINES:400}
+    model:
+      # Sprint 10-A: FC3D statistical model identity + candidate-scoring weights.
+      # Defaults below match the previously hardcoded values in Fc3dRuleEngine.
+      name: ${FC3D_MODEL_NAME:fc3d-statistical-model}
+      version: ${FC3D_MODEL_VERSION:v2}
+      pool-per-position: ${FC3D_MODEL_POOL_PER_POSITION:4}
+      recent-avoid-periods: ${FC3D_MODEL_RECENT_AVOID_PERIODS:5}
+      weight:
+        frequency: ${FC3D_MODEL_WEIGHT_FREQUENCY:0.35}
+        missing: ${FC3D_MODEL_WEIGHT_MISSING:0.20}
+        sum: ${FC3D_MODEL_WEIGHT_SUM:0.25}
+        odd-even: ${FC3D_MODEL_WEIGHT_ODD_EVEN:0.15}
+        anti-repeat-bonus: ${FC3D_MODEL_WEIGHT_ANTI_REPEAT_BONUS:0.05}
+        anti-repeat-penalty: ${FC3D_MODEL_WEIGHT_ANTI_REPEAT_PENALTY:0.35}
+        # Sprint 10-B: span signal, used only by the Top50 combination generator.
+        span: ${FC3D_MODEL_WEIGHT_SPAN:0.10}
+      # Sprint 10-B: Top50 combination-pool generator (Fc3dCombinationGenerator).
+      combination:
+        candidate-count: ${FC3D_MODEL_COMBINATION_CANDIDATE_COUNT:50}
+        max-pool-size: ${FC3D_MODEL_COMBINATION_MAX_POOL_SIZE:1000}
+        version: ${FC3D_MODEL_COMBINATION_VERSION:v3}
+      # Sprint 10-C: batch parameter-optimization experiments (Fc3dModelEvaluationService).
+      experiment:
+        enabled: ${FC3D_MODEL_EXPERIMENT_ENABLED:false}
+        max-combinations: ${FC3D_MODEL_EXPERIMENT_MAX_COMBINATIONS:100}
   kafka:
     enabled: ${KAFKA_ENABLED:false}
     use-avro: ${KAFKA_USE_AVRO:false}

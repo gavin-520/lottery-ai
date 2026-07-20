@@ -12,7 +12,7 @@
         v-model="question"
         type="textarea"
         :rows="3"
-        placeholder="输入分析问题，例如：近期红球热号趋势如何？"
+        placeholder="输入分析问题，例如：近期福彩3D百位热号与和值走势如何？"
       />
 
       <div v-if="result" class="result">

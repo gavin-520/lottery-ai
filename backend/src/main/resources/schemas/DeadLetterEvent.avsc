@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "DeadLetterEvent",
+  "namespace": "com.lottery.events",
+  "fields": [
+    {"name": "originalTopic", "type": "string"},
+    {"name": "eventType", "type": "string"},
+    {"name": "payloadJson", "type": "string"},
+    {"name": "errorMessage", "type": "string"},
+    {"name": "region", "type": "string"},
+    {"name": "correlationId", "type": "string"},
+    {"name": "schemaVersion", "type": "string"},
+    {"name": "timestamp", "type": "long"}
+  ]
+}

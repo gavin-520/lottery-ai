@@ -3,6 +3,7 @@
     <el-card class="login-card" shadow="hover">
       <h2>Lottery AI Platform</h2>
       <p class="subtitle">企业级 AI 数据分析平台</p>
+      <p class="lottery-current">当前：福彩3D</p>
 
       <el-form ref="formRef" :model="form" :rules="rules" @submit.prevent="handleLogin">
         <el-form-item prop="username">
@@ -95,8 +96,16 @@ h2 {
 .subtitle {
   text-align: center;
   color: #909399;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
   font-size: 14px;
+}
+
+.lottery-current {
+  text-align: center;
+  color: #27ae60;
+  font-weight: 600;
+  margin-bottom: 24px;
+  font-size: 15px;
 }
 
 .submit-btn {

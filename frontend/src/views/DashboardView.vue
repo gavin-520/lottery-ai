@@ -1,5 +1,12 @@
 <template>
   <div class="dashboard">
+    <el-alert
+      title="当前彩票类型：福彩3D"
+      type="success"
+      :closable="false"
+      show-icon
+      class="type-alert"
+    />
     <el-row :gutter="20">
       <el-col :span="8">
         <el-card shadow="never">
@@ -27,7 +34,7 @@
 
       <el-col :span="8">
         <el-card shadow="never">
-          <template #header>历史数据</template>
+          <template #header>福彩3D 历史</template>
           <div class="stat-value">{{ historyTotal }}</div>
           <p class="stat-label">已入库期数</p>
           <el-button type="primary" link @click="$router.push('/history')">查看全部 →</el-button>
@@ -74,7 +81,7 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-import { fetchHistory } from '@/api/history'
+import { fetchFc3dHistory } from '@/api/fc3d'
 import { fetchSyncStatus, subscribeEvents, triggerSync, type SyncStatus } from '@/api/sync'
 import { useAuthStore } from '@/stores/auth'
 
@@ -110,7 +117,7 @@ async function checkHealth() {
 
 async function loadHistoryCount() {
   try {
-    const page = await fetchHistory(1, 1)
+    const page = await fetchFc3dHistory(1, 1)
     historyTotal.value = page.total
   } catch {
     historyTotal.value = 0
@@ -177,6 +184,7 @@ onUnmounted(() => {
 
 <style scoped>
 .dashboard { padding: 4px; }
+.type-alert { margin-bottom: 16px; }
 .row2 { margin-top: 20px; }
 .status-item {
   display: flex; justify-content: space-between; align-items: center; padding: 8px 0;

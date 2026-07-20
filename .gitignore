@@ -41,3 +41,7 @@ ai-service/.pytest_cache/
 
 # Docker
 *.pid
+
+# Local datasets (large FC3D history dumps)
+data/*.json
+data/*_import.sql
